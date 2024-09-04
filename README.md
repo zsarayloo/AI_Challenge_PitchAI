@@ -1,8 +1,8 @@
-# UCI Spambase Classification Challenge
+# AI Challenge for Pitch.AI Project
 
 ## Overview
 
-Welcome to the Spambase Classification Challenge! This project is designed to evaluate your ability to work with real-world datasets, focusing on text preprocessing, feature extraction, and classification algorithms.
+Welcome to the Pitch.AI AI Challenge! This project is designed to evaluate your ability to work with real-world datasets, focusing on text preprocessing, feature extraction, and classification algorithms.
 
 The dataset you'll be working with is the UCI Spambase dataset, which is a labeled collection of email messages used to train algorithms to distinguish between legitimate messages and spam.
 
