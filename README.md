@@ -32,6 +32,7 @@ You are provided with a partially implemented Python script `main_code.py`. Your
 ## Dataset
 
 The dataset is provided in the `data/spambase.csv` file. It contains features extracted from email messages, labeled as spam (1) or not spam (0).
+[Dataset Link](https://archive.ics.uci.edu/dataset/94/spambase)
 
 ## Submission Process
 
