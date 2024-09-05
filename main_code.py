@@ -1,3 +1,4 @@
+# This challenge is designed for Wat.AI core member hiring process ( project name : Pitch.AI)
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
