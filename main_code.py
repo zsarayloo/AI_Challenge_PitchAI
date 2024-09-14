@@ -15,9 +15,6 @@ def load_data(filepath):
 def preprocess_data(df):
     # Perform preprocessing like scaling features
     #drop the features with coorelation less than <0.1
-
-    dict1 = {}
-
     dict1 = dict(df.corr()['1'])
     list_features = []
     for key, values in dict1.items():
