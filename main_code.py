@@ -7,23 +7,38 @@ from sklearn.metrics import accuracy_score, classification_report
 
 def load_data(filepath):
     # Load the dataset from the file and return it as a DataFrame
-    # TODO: Implement this function
-    pass
+
+    df = pd.read_csv(filepath)
+    return df
+
 
 def preprocess_data(df):
     # Perform preprocessing like scaling features
-    # TODO: Implement this function
-    pass
+    #drop the features with coorelation less than <0.1
+
+    dict1 = {}
+
+    dict1 = dict(df.corr()['1'])
+    list_features = []
+    for key, values in dict1.items():
+        if abs(values) < 0.1:
+            list_features.append(key)
+    df = df.drop(list_features, axis=1)
+    return df
+
 
 def train_model(X_train, y_train):
     # Train a RandomForestClassifier on the provided data
-    # TODO: Implement this function
-    pass
+    rfcModel = RandomForestClassifier()
+    rfcModel.fit(X_train, y_train)
+    return rfcModel
 
 def evaluate_model(model, X_test, y_test):
     # Evaluate the trained model and return the accuracy and classification report
-    # TODO: Implement this function
-    pass
+    y_pred = model.predict(X_test)
+    report = classification_report(y_test, y_pred)
+    accuracy = accuracy_score(y_test, y_pred)
+    return accuracy, report
 
 if __name__ == "__main__":
     # Path to the dataset
@@ -34,8 +49,9 @@ if __name__ == "__main__":
     df = preprocess_data(df)
 
     # Split data into features and target
-    X = df.drop("target", axis=1)
-    y = df["target"]
+    y = df['1']
+
+    X = df.drop('1', axis=1)
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 

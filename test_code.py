@@ -11,8 +11,8 @@ class TestSpambaseChallenge(unittest.TestCase):
         self.data_path = "data/spambase.csv"
         self.df = load_data(self.data_path)
         self.df = preprocess_data(self.df)
-        self.X = self.df.drop("target", axis=1)
-        self.y = self.df["target"]
+        self.X = self.df.drop("1", axis=1)
+        self.y = self.df["1"]
 
     def test_load_data(self):
         self.assertIsNotNone(self.df)
