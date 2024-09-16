@@ -8,18 +8,17 @@ from main_code import load_data, preprocess_data, train_model, evaluate_model
 
 class TestSpambaseChallenge(unittest.TestCase):
     def setUp(self):
-        self.data_path = "data/spambase.csv"
-        self.df = load_data(self.data_path)
-        self.df = preprocess_data(self.df)
-        self.X = self.df.drop("target", axis=1)
-        self.y = self.df["target"]
+        self.data_path = "./data/spambase.data"
+        df = load_data(self.data_path)
+        if df is not None:
+            self.X, self.y = preprocess_data(df)
 
     def test_load_data(self):
-        self.assertIsNotNone(self.df)
-        self.assertGreater(len(self.df), 0)  # Check that data is loaded
+        self.assertIsNotNone(self.X)
+        self.assertGreater(len(self.X), 0)  # Check that data is loaded
 
     def test_preprocess_data(self):
-        self.assertFalse(self.df.isnull().values.any())  # Check for missing values
+        self.assertFalse(self.X.isnull().values.any())  # Check for missing values
 
     def test_train_model(self):
         X_train, X_test, y_train, y_test = train_test_split(self.X, self.y, test_size=0.2, random_state=42)
@@ -30,4 +29,3 @@ class TestSpambaseChallenge(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
