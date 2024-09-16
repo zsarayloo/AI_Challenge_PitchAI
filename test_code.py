@@ -10,16 +10,20 @@ class TestSpambaseChallenge(unittest.TestCase):
     def setUp(self):
         self.data_path = "data/spambase.csv"
         self.df = load_data(self.data_path)
+
+        # Removed target column before preprocessing and converted pd dataframes to np ndarrays
+        self.y = self.df.iloc[:,-1:]
+        self.y = self.y.to_numpy().ravel()
+        self.df = self.df.iloc[:,:-1]
         self.df = preprocess_data(self.df)
-        self.X = self.df.drop("target", axis=1)
-        self.y = self.df["target"]
+        self.X = self.df
 
     def test_load_data(self):
         self.assertIsNotNone(self.df)
         self.assertGreater(len(self.df), 0)  # Check that data is loaded
 
     def test_preprocess_data(self):
-        self.assertFalse(self.df.isnull().values.any())  # Check for missing values
+        self.assertFalse(pd.DataFrame(self.df).isnull().values.any())  # Check for missing values
 
     def test_train_model(self):
         X_train, X_test, y_train, y_test = train_test_split(self.X, self.y, test_size=0.2, random_state=42)
