@@ -6,24 +6,33 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report
 
 def load_data(filepath):
-    # Load the dataset from the file and return it as a DataFrame
-    # TODO: Implement this function
-    pass
+    return pd.read_csv(filepath)
 
 def preprocess_data(df):
-    # Perform preprocessing like scaling features
-    # TODO: Implement this function
-    pass
+    if df.isnull().values.any():
+        df = df.dropna()
+    
+    X = df.iloc[:, :-1]
+    y = df.iloc[:, -1]
+    
+    scaler = StandardScaler()
+    X_scaled = scaler.fit_transform(X)
+    
+    df_preprocessed = pd.DataFrame(X_scaled, columns=X.columns)
+    df_preprocessed['target'] = y
+    
+    return df_preprocessed
 
 def train_model(X_train, y_train):
-    # Train a RandomForestClassifier on the provided data
-    # TODO: Implement this function
-    pass
+    model = RandomForestClassifier(random_state=42)
+    model.fit(X_train, y_train)
+    return model
 
 def evaluate_model(model, X_test, y_test):
-    # Evaluate the trained model and return the accuracy and classification report
-    # TODO: Implement this function
-    pass
+    y_pred = model.predict(X_test)
+    accuracy = accuracy_score(y_test, y_pred)
+    report = classification_report(y_test, y_pred)
+    return accuracy, report
 
 if __name__ == "__main__":
     # Path to the dataset
@@ -45,5 +54,4 @@ if __name__ == "__main__":
 
     print(f"Model Accuracy: {accuracy:.2f}")
     print(f"Classification Report:\n{report}")
-
 
