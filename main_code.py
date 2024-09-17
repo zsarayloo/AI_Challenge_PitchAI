@@ -110,7 +110,6 @@ if __name__ == "__main__":
 
     # Train and evaluate the model
     model = train_model(X_train, y_train)
-    # As results are considerable no need to do hyperparamter tuning
     accuracy, report = evaluate_model(model, X_test, y_test)
 
     print(f"Model Accuracy: {accuracy:.2f}")
