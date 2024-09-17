@@ -47,13 +47,14 @@ def preprocess_data(df):
     # Consequently, your test set performance wouldn’t accurately reflect how the model performs on unseen data.
     
     sc = StandardScaler()
-    scaled_features = sc.fit_transform(df.iloc[:,:-1])
-    scaled_features = pd.DataFrame(scaled_features, columns=df.columns[:-1])
-    scaled_features['target'] = df['target'].values
-    return scaled_features
+    features = df.drop('target',axis=1)
+    scaled_features = sc.fit_transform(features)
+    scaled_features = pd.DataFrame(scaled_features, columns=features.columns, index=df.index)
+    df_scaled = pd.concat([scaled_features, df["target"]], axis=1)
+    return df_scaled
 
 def cross_val_scores(X_train, y_train):
-    # Lets do Cross validation in order to check whether model is performing consistantly and not over fitting
+    # Cross validation is performed to check whether model is performing consistently and not over fitting
     clf_cv = RandomForestClassifier()
     kf = KFold(n_splits=10, shuffle=True)
     cv_results = cross_val_score(clf_cv, X_train, y_train, cv=kf, scoring="accuracy")
@@ -63,8 +64,16 @@ def train_model(X_train, y_train):
     # Train a RandomForestClassifier on the provided data
     # TODO: Implement this function
     rf = RandomForestClassifier()
-    rf.fit(X_train, y_train)
-    return rf
+    # Set the parameters by cross-validation
+    param_grid = [{'n_estimators': [x for x in range(50, 100)],
+                    'criterion': ['gini', 'entropy'],
+                    'max_features': ['sqrt', 'log2', None ]}]
+    grid = GridSearchCV(rf, param_grid)
+    grid.fit(X_train, y_train)
+
+    # Hyperparameter tuning using GridSearchCV is usually performed on validation data but since only two splits are given in the 
+    # notebook and I want to find the best estimator I did it in training itself
+    return grid.best_estimator_
 
 def evaluate_model(model, X_test, y_test):
     # Evaluate the trained model and return the accuracy and classification report
@@ -72,17 +81,7 @@ def evaluate_model(model, X_test, y_test):
     y_pred = model.predict(X_test)
     acc = accuracy_score(y_test, y_pred)
     clf_report = classification_report(y_test, y_pred)
-    return acc, clf_report
-
-def find_hyperparams(clf, X_val, y_val):
-    # Set the parameters by cross-validation
-    param_grid = [{'n_estimators': [x for x in range(50, 100)],
-                    'criterion': ['gini', 'entropy'],
-                    'max_features': ['sqrt', 'log2', None ]}]
-    grid = GridSearchCV(clf, param_grid)
-    grid.fit(X_val, y_val)
-    print('done fitting')
-    return grid.best_estimator_
+    return acc, clf_report    
 
 if __name__ == "__main__":
     # Path to the dataset
