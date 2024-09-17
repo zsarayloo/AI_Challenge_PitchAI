@@ -10,6 +10,7 @@ import seaborn as sns
 def load_data(filepath):
     # Load the dataset from the file and return it as a DataFrame
     # TODO: Implement this function
+    # The column names are taken from https://archive.ics.uci.edu/dataset/94/spambase
     columns = ["make", "address", "all", "3d", "our", "over", "remove", "internet",
                 "order", "mail", "receive", "will", "people", "report", "addresses",
                 "free", "business", "email", "you", "credit", "your", "font", "000",
