@@ -19,18 +19,20 @@ def load_data(filepath):
                 ";", "(", "[", "!", "$", "#", "capital_run_length_average", "capital_run_length_longest"
                 "capital_run_length_total", "target"]
     df = pd.read_csv(filepath, header=None, names=columns)
-    #df.rename(columns={57:'target'}, inplace=True)
+    # To print first 5 rows of dataframe
     print(df.head())
+    # To print summary of dataframe
     print(df.info())
+    # Counts null values for each column
     print(df.isnull().sum())
+    # Produce summary statistics.
+    # Summary statistics encompass measures that describe the central tendency, variability, and distribution shape of a dataset, excluding any NaN values.
+    # It analyzes both numerical and categorical data, as well as column sets in DataFrames with mixed data types. The results will differ based on the input provided.
     print(df.describe())
     return df
 
 def visualizations(df):
-    #correlation
-    corr = df.corr()
-    
-    plt.figure(dpi=130)
+    #correlation - to see how one column changes/ relates to the other for all the features
     sns.heatmap(df.corr(), annot=True, fmt= '.2f')
     plt.show()
 
