@@ -1,14 +1,17 @@
-name: Run Unit Tests
+name: Run Manual Unit Tests for PR Review
 
 on:
-  pull_request:
-    branches:
-      - main
-  workflow_dispatch:  
+  workflow_dispatch:  # Allows manual triggering of workflow
+    inputs:
+      pr_number:
+        description: 'PR Number'
+        required: true
+        default: 1  
 
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -24,5 +27,9 @@ jobs:
           pip install pandas scikit-learn
           pip install -r requirements.txt
 
+      
       - name: Run unit tests
-        run: python -m unittest test_code.py
+        id: tests
+        run: python -m unittest test_code.py  # This runs the test file
+
+     
