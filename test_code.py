@@ -13,7 +13,7 @@ class TestSpambaseChallenge(unittest.TestCase):
         current_dir = os.path.dirname(os.path.abspath(__file__))
         self.data_path = os.path.join(current_dir, "data", "spambase.csv")
         self.df = load_data(self.data_path)
-        print(self.df.head())  # Add this to see if data is loaded correctly
+        #print(self.df.head())  # Add this to see if data is loaded correctly
         self.df = preprocess_data(self.df)
         self.X = self.df.drop("target", axis=1)
         self.y = self.df["target"]
