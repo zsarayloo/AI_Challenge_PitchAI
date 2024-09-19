@@ -30,6 +30,16 @@ jobs:
           ls -R
       - name: Check file permissions
         run: ls -l data/spambase.csv
+      - name: Print current working directory
+        run: pwd
+
+      - name: List all files in the working directory
+        run: ls -R
+        
+      - name: Check if CSV loads correctly
+        run: python -c "import pandas as pd; df = pd.read_csv('data/spambase.csv', header=None); print(df.head())"
+
+        
 
 
           
