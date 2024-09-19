@@ -6,7 +6,7 @@ on:
       pr_number:
         description: 'PR Number'
         required: true
-        default: 1  
+        default: 3 
 
 jobs:
   test:
