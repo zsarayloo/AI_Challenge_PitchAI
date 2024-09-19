@@ -28,6 +28,9 @@ jobs:
       - name: List directory contents
         run: |
           ls -R
+      - name: Check file permissions
+        run: ls -l data/spambase.csv
+
 
           
 
