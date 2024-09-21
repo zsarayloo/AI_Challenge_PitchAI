@@ -1,5 +1,6 @@
 import unittest
 import pandas as pd
+import os
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
@@ -8,15 +9,11 @@ from main_code import load_data, preprocess_data, train_model, evaluate_model
 
 class TestSpambaseChallenge(unittest.TestCase):
     def setUp(self):
-        self.data_path = "data/spambase.csv"
+        
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        self.data_path = os.path.join(current_dir, "data", "spambase.csv")
         self.df = load_data(self.data_path)
 
-        # Removed target column before preprocessing and converted pd dataframes to np ndarrays
-        self.y = self.df.iloc[:,-1:]
-        self.y = self.y.to_numpy().ravel()
-        self.df = self.df.iloc[:,:-1]
-        self.df = preprocess_data(self.df)
-        self.X = self.df
 
     def test_load_data(self):
         self.assertIsNotNone(self.df)
