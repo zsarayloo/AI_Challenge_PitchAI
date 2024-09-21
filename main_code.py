@@ -7,23 +7,50 @@ from sklearn.metrics import accuracy_score, classification_report
 
 def load_data(filepath):
     # Load the dataset from the file and return it as a DataFrame
-    # TODO: Implement this function
-    pass
+    df = pd.read_csv(filepath)
+    return df
 
 def preprocess_data(df):
     # Perform preprocessing like scaling features
-    # TODO: Implement this function
-    pass
+    # Separate features and target
+    y = df["1"]
+    X = df.drop("1", axis=1)
+
+    # Scaling the features
+    scaler = StandardScaler()
+    X_scaled = scaler.fit_transform(X)
+
+    # Create a new DataFrame with the scaled features and add the target back
+    df_scaled = pd.DataFrame(X_scaled, columns=X.columns)
+    df_scaled["target"] = y.values
+    
+    return df_scaled
 
 def train_model(X_train, y_train):
     # Train a RandomForestClassifier on the provided data
-    # TODO: Implement this function
-    pass
+    
+    # Note** hyper parameters were found in 'hyperparam_optimization.ipynb using GridSearchCV'
+    model = RandomForestClassifier(
+        random_state=42,
+        bootstrap=False, 
+        max_depth=None, 
+        min_samples_leaf=1, 
+        min_samples_split= 5, 
+        n_estimators=200
+    )
+    model.fit(X_train, y_train)
+    
+    return model
 
 def evaluate_model(model, X_test, y_test):
-    # Evaluate the trained model and return the accuracy and classification report
-    # TODO: Implement this function
-    pass
+    # Evaluate the trained model and return the accuracy and classification reporty_pred = model.predict(X_test)
+    y_pred = model.predict(X_test)
+
+    # Calculate accuracy and classification report
+    accuracy = accuracy_score(y_test, y_pred)
+    report = classification_report(y_test, y_pred)
+
+    return accuracy, report
 
 if __name__ == "__main__":
     # Path to the dataset
