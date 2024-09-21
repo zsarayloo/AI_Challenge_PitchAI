@@ -8,7 +8,8 @@ from sklearn.metrics import accuracy_score, classification_report
 def load_data(filepath):
     # Load the dataset from the file and return it as a DataFrame
     # TODO: Implement this function
-    pass
+    df = pd.read_csv(filepath, header=None)
+    return df
 
 def preprocess_data(df):
     # Perform preprocessing like scaling features
@@ -31,19 +32,19 @@ if __name__ == "__main__":
 
     # Load and preprocess the data
     df = load_data(data_path)
-    df = preprocess_data(df)
+    # df = preprocess_data(df)
 
-    # Split data into features and target
-    X = df.drop("target", axis=1)
-    y = df["target"]
+    # # Split data into features and target
+    # X = df.drop("target", axis=1)
+    # y = df["target"]
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-    # Train and evaluate the model
-    model = train_model(X_train, y_train)
-    accuracy, report = evaluate_model(model, X_test, y_test)
+    # # Train and evaluate the model
+    # model = train_model(X_train, y_train)
+    # accuracy, report = evaluate_model(model, X_test, y_test)
 
-    print(f"Model Accuracy: {accuracy:.2f}")
-    print(f"Classification Report:\n{report}")
+    # print(f"Model Accuracy: {accuracy:.2f}")
+    # print(f"Classification Report:\n{report}")
 
 
