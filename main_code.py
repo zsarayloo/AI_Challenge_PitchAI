@@ -12,7 +12,6 @@ def load_data(filepath):
 
 def preprocess_data(df):
     # Perform preprocessing like scaling features
-    # Separate features and target
     y = df["1"]
     X = df.drop("1", axis=1)
 
@@ -20,7 +19,6 @@ def preprocess_data(df):
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X)
 
-    # Create a new DataFrame with the scaled features and add the target back
     df_scaled = pd.DataFrame(X_scaled, columns=X.columns)
     df_scaled["target"] = y.values
     
@@ -46,7 +44,6 @@ def evaluate_model(model, X_test, y_test):
     # Evaluate the trained model and return the accuracy and classification reporty_pred = model.predict(X_test)
     y_pred = model.predict(X_test)
 
-    # Calculate accuracy and classification report
     accuracy = accuracy_score(y_test, y_pred)
     report = classification_report(y_test, y_pred)
 
