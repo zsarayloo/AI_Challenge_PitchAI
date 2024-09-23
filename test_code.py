@@ -14,8 +14,8 @@ class TestSpambaseChallenge(unittest.TestCase):
         self.data_path = os.path.join(current_dir, "data", "spambase.csv")
         self.df = load_data(self.data_path)
         self.df = preprocess_data(self.df)
-        self.X = self.df.drop("target", axis=1)
-        self.y = self.df["target"]
+        self.X = self.df.iloc[:, :-1]
+        self.y = self.df.iloc[:, -1]
       
 
     def test_load_data(self):
@@ -26,7 +26,7 @@ class TestSpambaseChallenge(unittest.TestCase):
         self.assertFalse(self.df.isnull().values.any())  # Check for missing values
 
     def test_train_model(self):
-        X_train, X_test, y_train, y_test = train_test_split(self.X, self.y, test_size=0.2, random_state=42)
+        X_train, X_test, y_train, y_test = train_test_split(self.X, self.y, test_size = 0.2, random_state = 42)
         model = train_model(X_train, y_train)
         self.assertIsNotNone(model)
         accuracy, _ = evaluate_model(model, X_test, y_test)
@@ -34,4 +34,3 @@ class TestSpambaseChallenge(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
