@@ -8,22 +8,37 @@ from sklearn.metrics import accuracy_score, classification_report
 def load_data(filepath):
     # Load the dataset from the file and return it as a DataFrame
     # TODO: Implement this function
-    pass
+    try:
+        df = pd.read_csv(filepath)
+        return df
+    except FileNotFoundError:
+        print("File not found.")
+        return None
 
 def preprocess_data(df):
     # Perform preprocessing like scaling features
     # TODO: Implement this function
-    pass
+    X = df.drop(columns="target")
+    y = df["target"]
+    scaler = StandardScaler()
+    X_scaled = scaler.fit_transform(X)
+    return pd.DataFrame(X_scaled, columns=X.columns).assign(target=y)
 
 def train_model(X_train, y_train):
     # Train a RandomForestClassifier on the provided data
     # TODO: Implement this function
-    pass
+    model = RandomForestClassifier()
+    model.fit(X_train, y_train)
+    return model
+
 
 def evaluate_model(model, X_test, y_test):
     # Evaluate the trained model and return the accuracy and classification report
     # TODO: Implement this function
-    pass
+    y_pred = model.predict(X_test)
+    accuracy = accuracy_score(y_test, y_pred)
+    report = classification_report(y_test, y_pred)
+    return accuracy, report
 
 if __name__ == "__main__":
     # Path to the dataset
