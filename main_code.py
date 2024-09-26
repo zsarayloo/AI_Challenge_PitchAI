@@ -26,7 +26,6 @@ def evaluate_model(model, X_test, y_test):
     pass
 
 if __name__ == "__main__":
-    # Path to the dataset
     data_path = "data/spambase.csv"
 
     # Load and preprocess the data
